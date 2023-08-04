@@ -17,6 +17,7 @@ import {
   createTicketTypeRemote,
   createHotel,
   createRoomWithHotelId,
+  createHotelWithRooms,
 } from "../factories";
 import { cleanDb, generateValidToken } from "../helpers";
 
@@ -29,6 +30,13 @@ beforeEach(async () => {
 });
 
 const server = supertest(app);
+describe("POST /hotels", () => {
+  it("should return 201 when hotels are created", async () => {
+    const hotel = await createHotel();
+    const response = await server.post("/hotels").send(hotel);
+    expect(response.status).toBe(httpStatus.CREATED);
+  });
+});
 
 describe("GET /hotels", () => {
   it("should respond with status 401 if no token is given", async () => {

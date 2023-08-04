@@ -1,3 +1,4 @@
+import { HotelParams } from "./../../protocols";
 import hotelRepository from "@/repositories/hotel-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketRepository from "@/repositories/ticket-repository";
@@ -35,9 +36,18 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
   return hotel;
 }
 
+async function createHotelWithRooms(body: HotelParams) {
+  const hotel = await hotelRepository.createHotelWithRooms(body);
+  if (!body) {
+    throw notFoundError();
+  }
+  console.log("passei aqui no service");
+}
+
 const hotelService = {
   getHotels,
   getHotelsWithRooms,
+  createHotelWithRooms,
 };
 
 export default hotelService;
